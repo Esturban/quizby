@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Builder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Add Markdown parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Add syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Quiz Builder</h1>
+        </header>
+        
+        <main>
+            <section class="prompt-section">
+                <h2>Generate Quiz</h2>
+                <form id="quiz-form">
+                    <div class="form-group">
+                        <label for="custom-prompt">Custom Prompt (Optional)</label>
+                        <textarea id="custom-prompt" rows="5" placeholder="Enter your custom prompt here or use the default..."></textarea>
+                    </div>
+                    <button type="submit" id="generate-btn">Generate Quiz</button>
+                </form>
+            </section>
+            
+            <section class="results-section">
+                <div id="loading" class="hidden">Generating quiz... This may take a minute or two.</div>
+                <div id="quiz-output" class="quiz-container"></div>
+                <div id="execution-time"></div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
