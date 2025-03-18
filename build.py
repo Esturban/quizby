@@ -1,12 +1,13 @@
 from quizby import  quizby
 import datetime
+import os
 def build_sys_prompt():
-    with open("prompts/system/default.txt", "r") as f:
+    with open(os.getenv("SYSTEM_PROMPT"), "r") as f:
         return f.read()
     
 
 def build_assistant_prompt():
-    with open("prompts/assistant/default.txt", "r") as f:
+    with open(os.getenv("ASSISTANT_PROMPT"), "r") as f:
         text = f.read()
     with open("data/txt/cdmp-sample.txt", "r") as f:
         quiz_sample = f.read()
@@ -22,14 +23,15 @@ def build_assistant_prompt():
     return text
 
 def build_user_prompt():
-    with open("prompts/user/default.txt", "r") as f:
+    with open(os.getenv("USER_PROMPT"), "r") as f:
         return f.read()
 
-def main():
+def main(return_content=False):
     system_prompt = build_sys_prompt()
     assistant_prompt = build_assistant_prompt()
     user_prompt = build_user_prompt()
-    quizby(system_prompt, assistant_prompt, user_prompt)
+    return quizby(system_prompt, assistant_prompt, user_prompt, return_content=return_content)
+
 
 if __name__ == "__main__":
     start_time = datetime.datetime.now()
