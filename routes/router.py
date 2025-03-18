@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, jsonify, current_app
 import datetime
 import logging
 from quizby.quizby import quizby
-from build import build_sys_prompt, build_assistant_prompt, build_user_prompt
+from quizby.build import build_sys_prompt, build_assistant_prompt, build_user_prompt
 
 logger = logging.getLogger(__name__)
 main_bp = Blueprint('main', __name__)
