@@ -28,7 +28,8 @@ RUN useradd -m appuser && \
 USER appuser
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+    PYTHONUNBUFFERED=1 \
+    FLASK_ENV=production 
 
 # Default port that can be overridden at runtime
 ARG PORT=5001
