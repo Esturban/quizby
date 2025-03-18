@@ -240,3 +240,12 @@
       margin-bottom: 0.5rem;
     }
   }
+
+  /* Add this to your existing CSS file */
+
+.rate-limit-info {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: #64748b;
+  text-align: center;
+}

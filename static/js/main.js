@@ -42,11 +42,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
             });
             
-            if (!response.ok) {
-                throw new Error(`Server responded with status: ${response.status}`);
-            }
-            
             const data = await response.json();
+            
+            if (!response.ok) {
+                if (response.status === 429) {
+                    // Rate limit error
+                    const retryAfter = data.retry_after || 3600;
+                    const retryMinutes = Math.ceil(retryAfter / 60);
+                    throw new Error(`Rate limit exceeded. You can make 5 requests per hour. Please try again in ${retryMinutes} minute${retryMinutes > 1 ? 's' : ''}.`);
+                } else {
+                    throw new Error(`Server responded with status: ${response.status}`);
+                }
+            }
             
             if (data.error) {
                 throw new Error(data.error);
