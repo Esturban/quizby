@@ -10,9 +10,11 @@
     <!-- Add syntax highlighting -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Add PDF.js for PDF rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -23,14 +25,50 @@
         <main>
             <section class="prompt-section">
                 <h2>Create Quizzes for DMBOK/DAMA</h2>
+                
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" data-tab="default">Default DMBOK</button>
+                        <button class="tab-button" data-tab="custom">Upload Custom Textbook</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="default-tab">
+                        <p>Using the default DMBOK textbook for quiz generation.</p>
+                        <button id="toggle-source" class="secondary-button">Show Source Material</button>
+                    </div>
+                    
+                    <div class="tab-content" id="custom-tab">
+                        <div class="form-group">
+                            <label for="textbook-upload">Upload your textbook (PDF)</label>
+                            <input type="file" id="textbook-upload" accept=".pdf,.txt" />
+                            <p class="file-info">Max file size: 10MB</p>
+                        </div>
+                    </div>
+                </div>
+                
                 <form id="quiz-form">
-                    <!-- <div class="form-group">
-                       <label for="custom-prompt">Custom Prompt (Optional)</label>
+                    <div class="form-group">
+                        <label for="custom-prompt">Custom Prompt (Optional)</label>
                         <textarea id="custom-prompt" rows="5" placeholder="Enter your custom prompt here or use the default..."></textarea>
-                    </div>-->
+                    </div>
                     <button type="submit" id="generate-btn">Generate Quiz</button>
                     <p class="rate-limit-info">Limit: 5 requests per hour</p>
                 </form>
+            </section>
+            
+            <section id="source-viewer" class="source-viewer hidden">
+                <div class="source-header">
+                    <h3>Source Material</h3>
+                    <button id="close-source" class="close-button">✕</button>
+                </div>
+                <div id="pdf-container" class="pdf-container">
+                    <div id="pdf-viewer"></div>
+                    <div class="pdf-controls">
+                        <button id="prev-page">Previous</button>
+                        <span id="page-info">Page <span id="page-num">1</span> of <span id="page-count">0</span></span>
+                        <button id="next-page">Next</button>
+                    </div>
+                </div>
             </section>
             
             <section class="results-section hidden" id="results-section">
