@@ -32,10 +32,16 @@ def safe_read_file(env_var):
 def build_sys_prompt():
     return safe_read_file("SYSTEM_PROMPT")
 
-def build_assistant_prompt():
+def build_assistant_prompt(custom_textbook=None):
     text = safe_read_file("ASSISTANT_PROMPT")
     quiz_sample = safe_read_file("SAMPLE_FILE")
-    textbook = safe_read_file("BOOK_FILE")
+    
+    if custom_textbook:
+        # Use the uploaded textbook content
+        textbook = custom_textbook
+    else:
+        # Use the default textbook
+        textbook = safe_read_file("BOOK_FILE")
     
     return text + "\n" \
         + "Here is a sample question from the CDMP exam: \n" \
