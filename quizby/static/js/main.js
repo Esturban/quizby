@@ -34,6 +34,22 @@ document.addEventListener('DOMContentLoaded', () => {
             return hljs.highlightAuto(code, [lang]).value;
         }
     });
+
+    function renderError(message) {
+        quizOutput.innerHTML = '';
+        const errorNode = document.createElement('div');
+        errorNode.className = 'error';
+        errorNode.textContent = `Error: ${message}`;
+        quizOutput.appendChild(errorNode);
+    }
+
+    function renderQuiz(markdown) {
+        const htmlContent = marked.parse(markdown);
+        const sanitizedHtml = DOMPurify.sanitize(htmlContent, {
+            USE_PROFILES: { html: true },
+        });
+        quizOutput.innerHTML = sanitizedHtml;
+    }
     
     // Handle tab switching
     tabButtons.forEach(button => {
@@ -328,8 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             // Convert markdown to HTML
-            const htmlContent = marked.parse(data.quiz);
-            quizOutput.innerHTML = htmlContent;
+            renderQuiz(data.quiz);
             
             // Apply syntax highlighting to code blocks
             document.querySelectorAll('pre code').forEach((block) => {
@@ -343,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
         } catch (error) {
             console.error(error);
-            quizOutput.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            renderError(error.message);
         } finally {
             loadingIndicator.classList.add('hidden');
             generateBtn.disabled = false;

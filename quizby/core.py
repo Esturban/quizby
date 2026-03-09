@@ -104,7 +104,11 @@ def create_app(test_config=None):
             })
         
         except Exception as e:
-            return jsonify({'error': str(e)}), 500
+            app.logger.exception('Quiz generation failed')
+            error_message = 'Unable to generate quiz right now. Please try again later.'
+            if app.debug or app.testing:
+                error_message = str(e)
+            return jsonify({'error': error_message}), 500
     
     return app
 
