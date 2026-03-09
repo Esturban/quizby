@@ -1,12 +1,14 @@
-from flask import Flask, request, jsonify, render_template
 import datetime
+import os
+
+import PyPDF2
+from flask import Flask, jsonify, render_template, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from quizby.build  import build_sys_prompt, build_assistant_prompt, build_user_prompt
-from quizby.quizby import quizby
-import os
-import PyPDF2
 from werkzeug.utils import secure_filename
+
+from quizby.build import build_assistant_prompt, build_sys_prompt, build_user_prompt
+from quizby.quizby import quizby
 
 # Configure limiter with Flask
 limiter = Limiter(
@@ -22,9 +24,8 @@ def create_app(test_config=None):
                 static_folder='static')
     
     # Load config
-    if test_config is None:
-        app.config.from_pyfile('config.py', silent=True)
-    else:
+    app.config.from_object('config.Config')
+    if test_config is not None:
         app.config.update(test_config)
     
     # Configure uploads

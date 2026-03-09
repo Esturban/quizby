@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextPageBtn = document.getElementById('next-page');
     const pageNumSpan = document.getElementById('page-num');
     const pageCountSpan = document.getElementById('page-count');
+    const pageInfo = document.getElementById('page-info');
     
     // File upload element
     const textbookUpload = document.getElementById('textbook-upload');
@@ -69,10 +70,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const scale = 1.5;
     
     function loadDefaultPDF() {
-        const url = '/static/assets/dmbok-sample.pdf';
-        loadPDF(url);
+        loadSourceMaterial('/static/assets/dmbok-sample.txt');
     }
     
+    function setPaginationVisibility(visible) {
+        const displayValue = visible ? '' : 'none';
+        prevPageBtn.style.display = displayValue;
+        nextPageBtn.style.display = displayValue;
+        pageInfo.style.display = displayValue;
+    }
+
+    function loadSourceMaterial(url) {
+        if (url.toLowerCase().endsWith('.pdf')) {
+            setPaginationVisibility(true);
+            loadPDF(url);
+            return;
+        }
+
+        setPaginationVisibility(false);
+        loadTextSource(url);
+    }
+
     function loadPDF(url) {
         // Initialize PDF.js
         const pdfjsLib = window['pdfjs-dist/build/pdf'];
@@ -89,6 +107,25 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error loading PDF:', error);
             pdfViewer.innerHTML = `<div class="error">Error loading PDF: ${error.message}</div>`;
         });
+    }
+
+    async function loadTextSource(url) {
+        pdfViewer.innerHTML = '';
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Server responded with status ${response.status}`);
+            }
+
+            const text = await response.text();
+            const pre = document.createElement('pre');
+            pre.textContent = text;
+            pdfViewer.appendChild(pre);
+        } catch (error) {
+            console.error('Error loading source text:', error);
+            pdfViewer.innerHTML = `<div class="error">Error loading source text: ${error.message}</div>`;
+        }
     }
     
     function renderPage(num) {
@@ -185,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
             previewBtn.style.marginTop = '1rem';
             previewBtn.addEventListener('click', () => {
                 sourceViewer.classList.remove('hidden');
-                loadPDF(objectUrl);
+                loadSourceMaterial(objectUrl);
             });
             
             // Add or replace preview button
