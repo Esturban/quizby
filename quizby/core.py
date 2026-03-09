@@ -60,28 +60,38 @@ def create_app(test_config=None):
                 use_custom_textbook = request.form.get('useCustomTextbook') == 'true'
                 
                 textbook_content = None
-                if use_custom_textbook and 'textbook' in request.files:
-                    file = request.files['textbook']
-                    if file.filename:
-                        filename = secure_filename(file.filename)
-                        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                        file.save(file_path)
-                        
+                if use_custom_textbook:
+                    file = request.files.get('textbook')
+                    if file is None or not file.filename:
+                        raise ValueError('A PDF or TXT textbook upload is required.')
+
+                    filename = secure_filename(file.filename)
+                    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    file.save(file_path)
+                    
+                    try:
                         # Extract text from PDF if it's a PDF
                         if filename.lower().endswith('.pdf'):
                             textbook_content = extract_text_from_pdf(file_path)
                         elif filename.lower().endswith('.txt'):
                             with open(file_path, 'r', encoding='utf-8') as f:
                                 textbook_content = f.read()
-                        
-                        # Clean up the uploaded file
-                        os.remove(file_path)
+                        else:
+                            raise ValueError('Only PDF and TXT uploads are supported.')
+                    finally:
+                        if os.path.exists(file_path):
+                            os.remove(file_path)
             else:
                 # Handle JSON data
-                data = request.json or {}
+                if not request.is_json:
+                    raise ValueError('Request must be JSON or multipart form data.')
+
+                data = request.get_json(silent=True) or {}
                 custom_prompt = data.get('customPrompt', '')
                 use_custom_textbook = data.get('useCustomTextbook', False)
                 textbook_content = data.get('textbookContent')
+                if use_custom_textbook and not textbook_content:
+                    raise ValueError('Custom textbook content is required when useCustomTextbook is true.')
             
             # Get base prompts
             system_prompt = build_sys_prompt()
@@ -103,6 +113,8 @@ def create_app(test_config=None):
                 'executionTime': str(execution_time)
             })
         
+        except ValueError as e:
+            return jsonify({'error': str(e)}), 400
         except Exception as e:
             app.logger.exception('Quiz generation failed')
             error_message = 'Unable to generate quiz right now. Please try again later.'
