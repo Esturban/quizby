@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextPageBtn = document.getElementById('next-page');
     const pageNumSpan = document.getElementById('page-num');
     const pageCountSpan = document.getElementById('page-count');
+    const pageInfo = document.getElementById('page-info');
     
     // File upload element
     const textbookUpload = document.getElementById('textbook-upload');
@@ -33,6 +34,22 @@ document.addEventListener('DOMContentLoaded', () => {
             return hljs.highlightAuto(code, [lang]).value;
         }
     });
+
+    function renderError(message) {
+        quizOutput.innerHTML = '';
+        const errorNode = document.createElement('div');
+        errorNode.className = 'error';
+        errorNode.textContent = `Error: ${message}`;
+        quizOutput.appendChild(errorNode);
+    }
+
+    function renderQuiz(markdown) {
+        const htmlContent = marked.parse(markdown);
+        const sanitizedHtml = DOMPurify.sanitize(htmlContent, {
+            USE_PROFILES: { html: true },
+        });
+        quizOutput.innerHTML = sanitizedHtml;
+    }
     
     // Handle tab switching
     tabButtons.forEach(button => {
@@ -69,10 +86,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const scale = 1.5;
     
     function loadDefaultPDF() {
-        const url = '/static/assets/dmbok-sample.pdf';
-        loadPDF(url);
+        loadSourceMaterial('/static/assets/dmbok-sample.txt');
     }
     
+    function setPaginationVisibility(visible) {
+        const displayValue = visible ? '' : 'none';
+        prevPageBtn.style.display = displayValue;
+        nextPageBtn.style.display = displayValue;
+        pageInfo.style.display = displayValue;
+    }
+
+    function loadSourceMaterial(url) {
+        if (url.toLowerCase().endsWith('.pdf')) {
+            setPaginationVisibility(true);
+            loadPDF(url);
+            return;
+        }
+
+        setPaginationVisibility(false);
+        loadTextSource(url);
+    }
+
     function loadPDF(url) {
         // Initialize PDF.js
         const pdfjsLib = window['pdfjs-dist/build/pdf'];
@@ -89,6 +123,25 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error loading PDF:', error);
             pdfViewer.innerHTML = `<div class="error">Error loading PDF: ${error.message}</div>`;
         });
+    }
+
+    async function loadTextSource(url) {
+        pdfViewer.innerHTML = '';
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Server responded with status ${response.status}`);
+            }
+
+            const text = await response.text();
+            const pre = document.createElement('pre');
+            pre.textContent = text;
+            pdfViewer.appendChild(pre);
+        } catch (error) {
+            console.error('Error loading source text:', error);
+            pdfViewer.innerHTML = `<div class="error">Error loading source text: ${error.message}</div>`;
+        }
     }
     
     function renderPage(num) {
@@ -185,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
             previewBtn.style.marginTop = '1rem';
             previewBtn.addEventListener('click', () => {
                 sourceViewer.classList.remove('hidden');
-                loadPDF(objectUrl);
+                loadSourceMaterial(objectUrl);
             });
             
             // Add or replace preview button
@@ -291,8 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             // Convert markdown to HTML
-            const htmlContent = marked.parse(data.quiz);
-            quizOutput.innerHTML = htmlContent;
+            renderQuiz(data.quiz);
             
             // Apply syntax highlighting to code blocks
             document.querySelectorAll('pre code').forEach((block) => {
@@ -306,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
         } catch (error) {
             console.error(error);
-            quizOutput.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            renderError(error.message);
         } finally {
             loadingIndicator.classList.add('hidden');
             generateBtn.disabled = false;
