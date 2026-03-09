@@ -1,12 +1,14 @@
-from flask import Flask, request, jsonify, render_template
 import datetime
+import os
+
+import PyPDF2
+from flask import Flask, jsonify, render_template, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from quizby.build  import build_sys_prompt, build_assistant_prompt, build_user_prompt
-from quizby.quizby import quizby
-import os
-import PyPDF2
 from werkzeug.utils import secure_filename
+
+from quizby.build import build_assistant_prompt, build_sys_prompt, build_user_prompt
+from quizby.quizby import quizby
 
 # Configure limiter with Flask
 limiter = Limiter(
@@ -22,9 +24,8 @@ def create_app(test_config=None):
                 static_folder='static')
     
     # Load config
-    if test_config is None:
-        app.config.from_pyfile('config.py', silent=True)
-    else:
+    app.config.from_object('config.Config')
+    if test_config is not None:
         app.config.update(test_config)
     
     # Configure uploads
@@ -59,28 +60,38 @@ def create_app(test_config=None):
                 use_custom_textbook = request.form.get('useCustomTextbook') == 'true'
                 
                 textbook_content = None
-                if use_custom_textbook and 'textbook' in request.files:
-                    file = request.files['textbook']
-                    if file.filename:
-                        filename = secure_filename(file.filename)
-                        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                        file.save(file_path)
-                        
+                if use_custom_textbook:
+                    file = request.files.get('textbook')
+                    if file is None or not file.filename:
+                        raise ValueError('A PDF or TXT textbook upload is required.')
+
+                    filename = secure_filename(file.filename)
+                    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    file.save(file_path)
+                    
+                    try:
                         # Extract text from PDF if it's a PDF
                         if filename.lower().endswith('.pdf'):
                             textbook_content = extract_text_from_pdf(file_path)
                         elif filename.lower().endswith('.txt'):
                             with open(file_path, 'r', encoding='utf-8') as f:
                                 textbook_content = f.read()
-                        
-                        # Clean up the uploaded file
-                        os.remove(file_path)
+                        else:
+                            raise ValueError('Only PDF and TXT uploads are supported.')
+                    finally:
+                        if os.path.exists(file_path):
+                            os.remove(file_path)
             else:
                 # Handle JSON data
-                data = request.json or {}
+                if not request.is_json:
+                    raise ValueError('Request must be JSON or multipart form data.')
+
+                data = request.get_json(silent=True) or {}
                 custom_prompt = data.get('customPrompt', '')
                 use_custom_textbook = data.get('useCustomTextbook', False)
                 textbook_content = data.get('textbookContent')
+                if use_custom_textbook and not textbook_content:
+                    raise ValueError('Custom textbook content is required when useCustomTextbook is true.')
             
             # Get base prompts
             system_prompt = build_sys_prompt()
@@ -102,8 +113,14 @@ def create_app(test_config=None):
                 'executionTime': str(execution_time)
             })
         
+        except ValueError as e:
+            return jsonify({'error': str(e)}), 400
         except Exception as e:
-            return jsonify({'error': str(e)}), 500
+            app.logger.exception('Quiz generation failed')
+            error_message = 'Unable to generate quiz right now. Please try again later.'
+            if app.debug or app.testing:
+                error_message = str(e)
+            return jsonify({'error': error_message}), 500
     
     return app
 
