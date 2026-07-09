@@ -8,4 +8,9 @@ data
 *.code-workspace
 
 # AI-tool scaffolding
-.github/copilot-instructions.md
+.github/copilot-instructions.mdAGENTS.md
+AGENTS.MD
+CLAUDE.md
+GEMINI.md
+.codegraph/
+AGENTS.md
