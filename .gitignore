@@ -6,3 +6,12 @@ data
 .DS_Store
 *.pyc
 *.code-workspace
+
+# AI-tool scaffolding
+.github/copilot-instructions.mdAGENTS.md
+AGENTS.MD
+CLAUDE.md
+GEMINI.md
+.codegraph/
+AGENTS.md
+.github/copilot-instructions.md

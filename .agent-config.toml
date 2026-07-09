@@ -1,2 +1,2 @@
-tracked = ["agents_doc"]
-local_only = []
+tracked = ["claude"]
+local_only = ["codegraph", "agents_doc"]

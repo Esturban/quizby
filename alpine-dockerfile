@@ -1,0 +1,49 @@
+FROM python:3.11-alpine AS builder
+
+WORKDIR /app
+COPY requirements.txt.alpine requirements.txt
+
+# Install necessary build dependencies
+RUN apk add --no-cache --virtual .build-deps \
+    build-base \
+    gcc \
+    musl-dev \
+    python3-dev \
+    libffi-dev \
+    openssl-dev \
+    && python -m venv /venv \
+    && /venv/bin/pip install --no-cache-dir --upgrade pip \
+    && /venv/bin/pip install --no-cache-dir wheel \
+    && /venv/bin/pip install --no-cache-dir -r requirements.txt \
+    && apk del .build-deps
+
+FROM python:3.11-alpine AS runner
+WORKDIR /app
+
+# Install runtime dependencies
+RUN apk add --no-cache tiff-dev jpeg-dev openjpeg-dev zlib-dev libffi-dev
+
+# Copy venv from builder stage
+COPY --from=builder /venv /venv
+ENV PATH="/venv/bin:$PATH"
+
+# Copy app code
+COPY . .
+
+# Create non-root user
+RUN adduser -D appuser && \
+    chown -R appuser:appuser /app
+USER appuser
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    FLASK_ENV=production \
+    TIKTOKEN_SKIP_DOWNLOAD=1
+
+# Default port that can be overridden at runtime
+ARG PORT=5001
+ENV PORT=$PORT
+EXPOSE $PORT
+
+# Use gunicorn for production with proper env var expansion
+CMD gunicorn --bind 0.0.0.0:${PORT} --workers 1 --threads 4 --timeout 0 wsgi:application 

@@ -6,7 +6,7 @@ class Config:
     # API settings
     BASE_URL = os.environ.get('BASE_URL', 'https://openrouter.ai/api/v1')
     OR_API_KEY = os.environ.get('OR_API_KEY', '')
-    OR_MODEL = os.environ.get('OR_MODEL', 'google/gemini-2.0-pro-exp-02-05:free')
+    OR_MODEL = os.environ.get('OR_MODEL', 'stepfun/step-3.5-flash:free')
     REFERER = os.environ.get('REFERER', 'http://localhost')
     TITLE = os.environ.get('TITLE', 'Quiz Generator')
     

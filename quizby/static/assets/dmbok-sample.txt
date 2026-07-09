@@ -1,0 +1,5 @@
+
+Preface
+DA MA International is pleased to release the second edition of the DAMA Guide to the Data Management
+Body of Knowledge (DAMA-DMBOK2). Since the publication of the first edition in 2009, significant
+developments have taken place in the field of data management. Data Governance has become a standard
