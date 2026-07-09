@@ -1,0 +1,320 @@
+Question 1
+What does a data dictionary capture?
+- Business definitions of the data
+- Any acronym, abbreviation or synonyms used to represent business terminologies
+- Policies or rules governing the data
+- The structure and contents of data sets, e.g. for a single application
+- All of the above
+Question 2
+Which of these is NOT a data management principle?
+- Data is valuable
+- Data is easily duplicated
+- Data Management Requirements are Business Requirements
+- Data Management depends on diverse skills
+- Data Management is Lifecycle management
+  
+Question 3
+Which of these best describes the relationship between Data Governance and Data Management?
+- Data Governance is ensuring data is managed, whereas Data Management involves managing data to achieve goals
+- Data Management is ensuring data is managed, whereas Data Governance involves managing data to achieve goals
+- Data Governance is an IT led initiative, whereas Data Management is a business function
+- Data Governance is separate from Data Management
+- Data Governance and Data Management both mean the same thing
+  
+Question 4
+When profiling our customer address dataset, we found erroneous zip/postal code records that were 5 digits instead of 6. Which Data Quality Dimension does this error represent?
+- Uniqueness
+- Timeliness
+- Validity
+- Consistency
+- Completeness
+  
+Question 5
+Which of these is the purpose of Data Architecture, according to the DMBOK?
+- Identifying how an enterprise creates value for customers and other stakeholders
+- Describing how data should be organised and managed
+- Describing the structure and functionality of applications in an enterprise
+- Describing the physical technology needed to enable systems to function and deliver value
+- Establishing requirements for the other domains
+  
+Question 6
+Which of these metadata examples do NOT represent technical metadata?
+- Data access rights
+- Data sharing rules and agreements
+- Data CRUD rules
+- Database object properties
+- Data lineage documentation
+  
+Question 7
+Which of these data quality issues is NOT prevented by enforcing referential integrity rules?
+- Orphan rows
+- Duplicate data
+- Inaccurate data
+- Multiple values for the same calculation
+- Improved response times
+
+Question 8
+Which of these is NOT a common functional requirement for a metadata solution?
+- Access rights
+- Structure of metadata
+- Roles and responsibilities for metadata management
+- How frequently metadata needs to be updated
+- The technical expertise of the average data consumer
+  
+Question 9
+What is NOT true about data cleansing?
+- To continuously remediate data through cleansing incurs costs and increases risk
+- Data cleansing includes detecting and correcting data errors to bring the quality of data to an acceptable level
+- Data cleansing requires that you transform the data so that it adheres to data standards and domain rules
+- Correcting data errors on an ongoing basis is always more cost effective than other alternatives
+- Correcting data errors on an ongoing basis is sometimes necessary
+
+Question 10
+Data Warehouses can usually be implemented with which method?
+- Waterfall
+- Incremental
+- Agile
+- Iterative
+- All of the above
+  
+Question 11
+What are some of the key reasons document and content management is important for an organisation?
+- Legal requirements and the ability to respond to litigations when it arises
+- The sheer amount of information in this day and age means increased cost of storage and document handling cost
+- Business continuity requirements
+- Prevent documents from being lost as they are increasingly being integrated into newer technologies
+- All of the above
+
+Question 12
+Entity type, Entity instance, Dimension, Object, Hub and Node are all examples of what?
+- Data Models
+- Entity Alias
+- Schemas
+- Values
+- Measures
+  
+Question 13
+What is NOT a goal of a Master and Reference data management programme?
+- Lowering the cost and reducing the complexity of data usage and integration through standards, common data models, and integration patterns
+- Document and manage organisational knowledge of data-related business terminology in order to ensure people understand data content and can use data consistently
+- Enabling Master and Reference Data to be shared across enterprise functions and applications
+- Ensuring the organisation has complete, consistent, current, authoritative Master and Reference Data across organisational processes
+- None of the above
+  
+Question 14
+How should metadata be delivered to data consumers and applications?
+- Self service BI tool
+- Data Marts
+- Web APIs
+- Metadata intranet websites
+- All of the above
+
+Question 15
+Which of these is NOT an activity for reference and master data management?
+- Develop Data Visualisation Tools
+- Evaluate and Assess Data Sources
+- Define Stewardship and Maintenance Processes
+- Define Architectural Approach
+- Establish Governance Policies
+  
+Question 16
+Data Sharing Agreements are often used to enforce proper access and use of master and reference data shared across the organisation. Who should drive this effort?
+- Data Quality team
+- Data Governance programme
+- IT team
+- Data Analytics initiative
+- Data privacy team
+
+Question 17
+How does Master data differ from Reference data?
+- Unlike Reference data, Master data is not usually limited to predefined domain values
+- Reference data must be held to a higher data quality standard than Master data
+- There is no difference, Master and Reference data are identical concepts
+- Reference data does not require business definitions
+- Reference data does not require a data steward
+  
+Question 18
+When selecting a DW/BI tool for your organisation, which is NOT a factor to consider:
+- Leverage decision criteria tools, process implementation tools and professional services to facilitate the selection process
+- IT preferences based on their experience with best in class tools
+- Evaluate between buying of the shelf, building your own tool in house or SaaS options
+- Define your near term requirements, potential future requirements and nonfunctional specifications
+- Upgrade, maintenance and replacement costs
+  
+
+Question 19
+Which of these statements is NOT true of designing a Data Governance Operating Framework?
+- Data governance will be less intense for organisations that only use data as an operational lubricant
+- The business model, e.g. decentralised vs centralised, local vs international are factors that impact how the DG operating model is defined
+- Data governance operating framework examples are provided in the DMBOK and can be directly applied to any business
+- The DG operating model must fit within the organisational culture whilst still progressing change
+- Highly regulated industries will need a different operating model to less regulated industries
+  
+Question 20
+Which of these is TRUE about defining high-quality data?
+- Many people can define what high-quality data means
+- The goal of defining high-quality data is to ensure data is 100% error free
+- High quality data is defiined as data that is fit for the purposes of data consumers
+- High quality data is defined by the data characteristics, not by business needs
+- The data "has to be right" is sufficient to determine what high-quality data means
+  
+Question 21
+What is one of the major differences between operational systems and data warehouses?
+- Operational systems are online all the time; data warehouses are available only at month end
+- Operational systems focus on data retention; data warehouses focus on data security
+- Operational systems process batch data; data warehouses support business analytics
+- Operational systems focus on historical data; data warehouses contain current data
+- Operational systems focus on current data; data warehouses contain historical data
+
+Question 22
+What is the role of the Data Governance function in the DMBOK?
+- The Data Governance function is unrelated to other Data Management functions
+- The Data Governance function guides all other data management functions
+- The Data Governance function is only concerned with Data Quality
+- The Data Governance function enables IT to dictate data rules to the business
+- The Data Governance function has no formal role
+  
+Question 23
+What is NOT a goal of Data Integration and Interoperability?
+
+- Provide data securely, with regulatory compliance, in the format and time frame needed
+- Identify meaningful events and automatically trigger alerts and actions
+- Support business intelligence, analytics, master data management, and operational efficiency efforts
+- Managing the availability of data throughout the data lifecycle
+- Lower cost and complexity of managing solutions by developing shared models and interfaces
+Question 24
+What are fact tables used for?
+- Storing mostly textual descriptions of facts
+- Storing documents and other unstructured data
+- Storing the important objects of the business
+- Storing numeric measurements, such as counts and quantities
+- Storing metadata
+  
+Question 25
+What is the key difference between an ETL job and ELT job?
+- When doing an ELT job, there is a need for a staging area while an ETL job does not
+- No difference exists
+- In an ELT job, transformation to the data occurs after the data has been loaded to the target system
+- ELT is used for analytics, whereas ETL is used for data warehousing
+- ELT is synonymous with batch processing while ETL is usually associated with real time processing
+  
+Question 26
+A Database Administrator plays many roles in data storage and operations. Which of these tasks does NOT relate to their role?
+- Supporting the database from implementation of the environment to monitoring and tuning it to ensure good performance
+- Assist in data security measures
+- Defining technical requirements to meet the needs of the organisation
+- Matching, merging and standardising data
+- Backing up and purging data
+
+Question 27
+One of the main approaches to managing sensitive data is classifying them and enforcing a common standard. This process is also part of:
+- Metadata Management
+- Database Management
+- Master Data Management
+- Data standardisation
+- Reference Data Management
+  
+Question 28
+An area around the edge of an organisation with a firewall between it and the internet and/or between it and the organisation's internal systems is known as?
+- ERP
+- VPN
+- Backdoor
+- Boundary
+- DMZ
+
+Question 29
+Which of these principles are NOT part of the Generally Acceptable Recordkeeping Principles® (GARP)?
+- Principle of Protection
+- Principle of Availability
+- Principle of Accountability
+- Principle of Consistency
+- Principle of Disposition
+  
+Question 30
+The 3 Vs have been used to characterise Big Data and has now expanded to include more Vs. Which V are we referring to when talking about how trustworthy the data is?
+- Veracity
+- Viscosity
+- Velocity
+- Volume
+- Variety
+
+Question 31
+When creating an ethical data handling strategy, which of these options is NOT a concern?
+- Values statements
+- Compliance framework
+- Operating model
+- Risk assessments
+- Training and communications
+  
+Question 32
+
+According to the DMBOK, why is Data Architecture critical to Data Management?
+- Because IT teams need data models in order to make better choices about systems
+- Because Data Architecture is difficult and we need to train more Data Architects
+- Data Architecture is not critical to Data Management, it's an optional choice for mature organisations
+- Because there's too much data for any one person to comprehend, so we need representations of our data that management can use to make better decisions with
+- None of the above
+  
+Question 33
+Which of these is a core idea of Data Warehousing shared by both Inmon and Kimball?
+- Storing and organising data in a Data Warehouse increases its value
+- Storing and organising data in a Data Warehouse increases its cost
+- Storing and organising data in a Data Warehouse increases its risk profile
+- Storing and organising data in a Data Warehouse helps us back up archived data
+- Storing and organising data in a Data Warehouse decreases its cost
+  
+Question 34
+Data profiling assists in many aspects of improving data quality except:
+- Identifying duplicate columns and exposing embedded value dependencies
+- Drilling down into the analysed data
+- Determining business process impacts
+- Discovering the structure, content, and quality of your critical data
+- None of the above
+  
+Question 35
+How do Data Architects add value to your business?
+- By creating and maintaining organisational knowledge about data and the systems through which it moves
+- By identifying opportunities for data usage, cost reduction, and risk mitigation
+- By facilitating alignment between Business and IT
+- By acting as a bridge between business strategy and technology execution
+- All of the above
+  
+Question 36
+The highest level of these data model types is the:
+- Operating Model
+- Conceptual Model
+- Logical Model
+- Physical Model
+- Super Model
+  
+Question 37
+Which of these is NOT a principle shared by organisations that get more value from their data?
+- Data should be managed as a corporate asset
+- Data Governance should always be led by IT
+- Data management best practices should be incentivised across the organisation
+- Enterprise data strategy must be directly aligned with overall business strategy
+- Data management processes should be continuously improved
+  
+Question 38
+A relationship label that states "Each student may attend one or many courses" is an example of what type of rule?
+- Cardinality rule
+- Referential integrity rule
+- Student management rule
+- Connection rule
+- None of the above
+  
+Question 39
+The design, implementation, and support of stored data, to maximize its value across its lifecycle is known as:
+- Metadata Management
+- Data Security
+- Data Storage and Operations
+- Data Management and process
+- Master Data Management
+
+Question 40
+In data modelling, what is a foreign key?
+- A key that is not recognised by the system
+- A representation of a relationship between two entities
+- A key to understanding conceptual data models
+- A quality key
+- None of the above
