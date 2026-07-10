@@ -13,5 +13,7 @@ AGENTS.MD
 CLAUDE.md
 GEMINI.md
 .codegraph/
+.wolf/
+.claude/
 AGENTS.md
 .github/copilot-instructions.md
